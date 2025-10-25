@@ -2,7 +2,7 @@
 
 Une application complète de gestion de voitures développée avec Spring Boot (backend), React (frontend), et monitorée avec Prometheus et Grafana.
 
-Voici le lien vers le repo du frontend : 
+Voici le lien vers le repo du frontend : https://github.com/cheikhi51/Frontend-Voiture-Shop.git
 
 ## 🏗️ Architecture
 
