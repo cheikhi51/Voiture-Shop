@@ -6,10 +6,10 @@ services:
     image: mariadb:10.11
     container_name: mariadb-springboot
     environment:
-      MYSQL_ROOT_PASSWORD: hamadach2003
+      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-hamadach2003}
       MYSQL_DATABASE: springboot
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: 1234
+      MYSQL_USER: ${SPRING_SECURITY_USER_NAME:-admin}
+      MYSQL_PASSWORD: ${SPRING_SECURITY_USER_PASSWORD:-1234}
     ports:
       - "3306:3306"
     volumes:
@@ -30,29 +30,32 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
-      - "8082:8082"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/springboot
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=hamadach2003
-      - SPRING_SECURITY_USER_NAME=admin
-      - SPRING_SECURITY_USER_PASSWORD=1234
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD:-hamadach2003}
+      - SPRING_SECURITY_USER_NAME=${SPRING_SECURITY_USER_NAME:-admin}
+      - SPRING_SECURITY_USER_PASSWORD=${SPRING_SECURITY_USER_PASSWORD:-1234}
+      - SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME:-SpringDataRest}
+      - SERVER_PORT=${SERVER_PORT:-8081}
+      - MANAGEMENT_SERVER_PORT=${MANAGEMENT_SERVER_PORT:-8082}
     depends_on:
       mariadb:
         condition: service_healthy
     networks:
       - app-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/api/voitures"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    # Retirer le healthcheck qui nécessite curl (problème Alpine)
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8081/api/voitures"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
 
   # Frontend React
   frontend:
     build:
-      context: C:\Users\cheik\reactSpringApp\
+      context: ../reactSpringApp
       dockerfile: Dockerfile
     ports:
       - "3000:80"
