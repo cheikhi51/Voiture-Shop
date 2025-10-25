@@ -60,7 +60,6 @@ services:
       MANAGEMENT_ENDPOINT_HEALTH_SHOW_COMPONENTS: always
       MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
       MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: "true"
-      MANAGEMENT_METRICS_DISTRIBUTION_PERCENTILES_HISTOGRAM_HTTP_SERVER_REQUESTS: "true"
       MANAGEMENT_METRICS_TAGS_APPLICATION: SpringDataRest
 
       # Enable specific metrics
@@ -74,7 +73,7 @@ services:
     networks:
       - app-network
 
-  # Frontend React
+  # Frontend React - FIXED PATH
   frontend:
     build:
       context: C:/Users/cheik/reactSpringApp
