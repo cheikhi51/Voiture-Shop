@@ -1,0 +1,32 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+# - "first_rules.yml"
+
+scrape_configs:
+  - job_name: 'spring-boot-app'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8082']  # Pour Docker Desktop
+    scrape_interval: 10s
+    honor_labels: true
+    # Métriques personnalisées pour les voitures
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'voiture_.*'
+        action: keep
+
+  - job_name: 'mariadb'
+    static_configs:
+      - targets: ['mariadb:9104']  # MariaDB Exporter
+    scrape_interval: 30s
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
