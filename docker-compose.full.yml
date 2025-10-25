@@ -77,7 +77,7 @@ services:
   # Frontend React
   frontend:
     build:
-      context: ../reactSpringApp
+      context: C:/Users/cheik/reactSpringApp
       dockerfile: Dockerfile
     ports:
       - "3000:80"
